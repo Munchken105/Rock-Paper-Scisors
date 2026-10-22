@@ -91,11 +91,9 @@ function playGame(){
 
     if(humanScore === computerScore){
         console.log("you drawed :|");
-
     }
-    
 }
 
-playGame
+playGame();
 
 
