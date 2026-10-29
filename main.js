@@ -40,13 +40,14 @@ function playGame() {
     let msg = document.querySelector("#output");
     let winMsg = `${humanChoice} beats ${computerChoice} you win! :)`;
     let loseMsg = `${humanChoice} beats ${computerChoice} you lose! :(`;
-    
+
     if (humanChoice === computerChoice) {
       msg.textContent = `${humanChoice} draws with ${computerChoice} :|`
       updateScore();
 
     } else if (humanChoice === "rock" && computerChoice === "scissors") {
       msg.textContent = winMsg;
+      humanScore++;
       updateScore();
     } else if (humanChoice === "rock" && computerChoice === "paper") {
       msg.textContent = "paper beats rock you lose! :(";
