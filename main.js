@@ -1,6 +1,6 @@
 const validInput = new Set(["rock", "paper", "scissors"]);
 
-  let humanChoice = "";
+let humanChoice = "";
 
 
 
@@ -27,57 +27,88 @@ function getHumanChoice() {
 function playGame() {
   let humanScore = 0;
   let computerScore = 0;
+  let roundsPlayed = 0;
+  let playerMsg = document.querySelector("#score-player");
+  let computerMsg = document.querySelector("#score-computer");
+  let msg = document.querySelector("#output");
 
-  function updateScore(){
-    let playerMsg = document.querySelector("#score-player");
-    let computerMsg = document.querySelector("#score-computer");
-
+  function updateScore() {
     playerMsg.textContent = `${humanScore}`;
     computerMsg.textContent = `${computerScore}`;
   }
 
   function playRound(humanChoice, computerChoice) {
-    let msg = document.querySelector("#output");
+    roundsPlayed++;
     let winMsg = `${humanChoice} beats ${computerChoice} you win! :)`;
-    let loseMsg = `${humanChoice} beats ${computerChoice} you lose! :(`;
+    let loseMsg = `${computerChoice} beats ${humanChoice} you lose! :(`;
 
     if (humanChoice === computerChoice) {
       msg.textContent = `${humanChoice} draws with ${computerChoice} :|`
-      updateScore();
 
     } else if (humanChoice === "rock" && computerChoice === "scissors") {
       msg.textContent = winMsg;
       humanScore++;
-      updateScore();
     } else if (humanChoice === "rock" && computerChoice === "paper") {
       msg.textContent = "paper beats rock you lose! :(";
       computerScore++;
-      updateScore();
     } else if (humanChoice === "paper" && computerChoice === "rock") {
       msg.textContent = winMsg;
       humanScore++;
-      updateScore();
     } else if (humanChoice === "paper" && computerChoice === "scissors") {
       msg.textContent = loseMsg;
       computerScore++;
-      updateScore();
     } else if (humanChoice === "scissors" && computerChoice === "rock") {
       msg.textContent = loseMsg;
       computerScore++;
-      updateScore();
     } else if (humanChoice === "scissors" && computerChoice === "paper") {
       msg.textContent = winMsg;
       humanScore++;
-      updateScore();
     }
+    updateScore();
   }
   const con = document.getElementById('rps');
   con.addEventListener('click', (e) => {
-    const btn = e.target.closest("#rock, #paper, #scissors");
-    if (!btn || !con.contains(btn)) return;
 
-    humanChoice = btn.id;
-    playRound(getHumanChoice(),getComputerChoice());
+    if (roundsPlayed >= 5) return;
+
+    if (roundsPlayed < 5) {
+      const btn = e.target.closest("#rock, #paper, #scissors");
+      if (!btn || !con.contains(btn)) return;
+
+      humanChoice = btn.id;
+      playRound(getHumanChoice(), getComputerChoice());
+    }
+
+    if(roundsPlayed === 5) {
+      const div_output = document.querySelector("#div-output");
+      const playAgain = document.createElement("button");
+      playAgain.textContent = "Play Again";
+      playAgain.className = "playAgain";
+      div_output.appendChild(playAgain);
+
+      playAgain.addEventListener('click', (e) => {
+        roundsPlayed = 0;
+        
+        if (humanScore > computerScore){
+          msg.textContent = "Game Over! You Win! :)";
+        }
+
+        else if (humanScore < computerScore){
+          msg.textContent = "Game Over! You Lose! :(";
+        }
+
+        else if(humanScore === computerScore){
+          msg.textContent = "Game Over! You Drawed! :|"
+        }
+        
+        humanScore = 0;
+        computerScore = 0;
+
+        updateScore();
+        msg.textContent = "";
+        playAgain.remove();
+      });
+    }
   });
 }
 
