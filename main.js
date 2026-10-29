@@ -1,5 +1,9 @@
 const validInput = new Set(["rock", "paper", "scissors"]);
 
+  let humanChoice = "";
+
+
+
 function getComputerChoice() {
   let rand = Math.random();
   let retval = "";
@@ -14,73 +18,66 @@ function getComputerChoice() {
   return retval;
 }
 
+
+
 function getHumanChoice() {
-  let loopCondition = false;
-  let retval = "";
-  while (!loopCondition) {
-    let userInput = prompt("Enter: rock paper or scissors");
-
-    if (userInput === null){
-        alert("null is not valid");
-        continue;
-    }
-
-    userInput = userInput.toLowerCase().replace(/\s/g, "");
-
-    if (validInput.has(userInput)) {
-      loopCondition = true;
-      retval = userInput;
-    }
-    else{
-        alert("Invalid input rock paper scissors");
-    }
-  }
-  return retval;
+  return humanChoice;
 }
 
 function playGame() {
   let humanScore = 0;
   let computerScore = 0;
 
+  function updateScore(){
+    let playerMsg = document.querySelector("#score-player");
+    let computerMsg = document.querySelector("#score-computer");
+
+    playerMsg.textContent = `${humanScore}`;
+    computerMsg.textContent = `${computerScore}`;
+  }
+
   function playRound(humanChoice, computerChoice) {
+    let msg = document.querySelector("#output");
+    let winMsg = `${humanChoice} beats ${computerChoice} you win! :)`;
+    let loseMsg = `${humanChoice} beats ${computerChoice} you lose! :(`;
+    
     if (humanChoice === computerChoice) {
-      console.log(`${humanChoice} draws with ${computerChoice} :|`);
+      msg.textContent = `${humanChoice} draws with ${computerChoice} :|`
+      updateScore();
+
     } else if (humanChoice === "rock" && computerChoice === "scissors") {
-      console.log("rock beats paper you win! :)");
-      humanScore++;
+      msg.textContent = winMsg;
+      updateScore();
     } else if (humanChoice === "rock" && computerChoice === "paper") {
-      console.log("paper beats rock you lose! :(");
+      msg.textContent = "paper beats rock you lose! :(";
       computerScore++;
+      updateScore();
     } else if (humanChoice === "paper" && computerChoice === "rock") {
-      console.log("paper beats rock you win! :)");
+      msg.textContent = winMsg;
       humanScore++;
+      updateScore();
     } else if (humanChoice === "paper" && computerChoice === "scissors") {
-      console.log("scissors beats rock you lose! :(");
+      msg.textContent = loseMsg;
       computerScore++;
+      updateScore();
     } else if (humanChoice === "scissors" && computerChoice === "rock") {
-      console.log("rock beats scissors you lose! :(");
+      msg.textContent = loseMsg;
       computerScore++;
+      updateScore();
     } else if (humanChoice === "scissors" && computerChoice === "paper") {
-      console.log("scissors beats paper you win! :)");
+      msg.textContent = winMsg;
       humanScore++;
+      updateScore();
     }
   }
+  const con = document.getElementById('rps');
+  con.addEventListener('click', (e) => {
+    const btn = e.target.closest("#rock, #paper, #scissors");
+    if (!btn || !con.contains(btn)) return;
 
-  for (i = 0; i < 5; i++) {
-    playRound(getHumanChoice(), getComputerChoice());
-  }
-
-  if (humanScore > computerScore) {
-    console.log("you win! :)");
-  }
-
-  if (humanScore < computerScore) {
-    console.log("you lose! :(");
-  }
-
-  if (humanScore === computerScore) {
-    console.log("you drawed :|");
-  }
+    humanChoice = btn.id;
+    playRound(getHumanChoice(),getComputerChoice());
+  });
 }
 
 playGame();
