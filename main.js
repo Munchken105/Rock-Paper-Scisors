@@ -64,11 +64,11 @@ function playGame() {
       msg.textContent = winMsg;
       humanScore++;
     }
-    if (humanScore > computerScore && roundsPlayed === 5) {
+    if (humanScore > computerScore && (humanScore === 5 || computerScore === 5)) {
       msg.textContent = "Game Over! You Win! :)";
-    } if (humanScore < computerScore && roundsPlayed === 5) {
+    } if (humanScore < computerScore && (humanScore === 5 || computerScore === 5)) {
       msg.textContent = "Game Over! You Lose! :(";
-    } if (humanScore === computerScore && roundsPlayed === 5) {
+    } if (humanScore === computerScore && (humanScore === 5 || computerScore === 5)) {
       msg.textContent = "Game Over! You Drawed! :|";
     }
 
@@ -77,9 +77,9 @@ function playGame() {
   const con = document.getElementById('rps');
   con.addEventListener('click', (e) => {
 
-    if (roundsPlayed >= 5) return;
+    if (roundsPlayed >= 5 &&(humanScore === 5 || computerScore === 5)) return;
 
-    if (roundsPlayed < 5) {
+    if ((humanScore < 5 && computerScore < 5)) {
       const btn = e.target.closest("#rock, #paper, #scissors");
       if (!btn || !con.contains(btn)) return;
 
@@ -87,7 +87,7 @@ function playGame() {
       playRound(getHumanChoice(), getComputerChoice());
     }
 
-    if (roundsPlayed === 5) {
+    if ((humanScore === 5 || computerScore === 5)) {
       const div_output = document.querySelector("#div-output");
       const playAgain = document.createElement("button");
       playAgain.textContent = "Play Again";
