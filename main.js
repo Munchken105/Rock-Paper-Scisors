@@ -64,6 +64,14 @@ function playGame() {
       msg.textContent = winMsg;
       humanScore++;
     }
+    if (humanScore > computerScore && roundsPlayed === 5) {
+      msg.textContent = "Game Over! You Win! :)";
+    } if (humanScore < computerScore && roundsPlayed === 5) {
+      msg.textContent = "Game Over! You Lose! :(";
+    } if (humanScore === computerScore && roundsPlayed === 5) {
+      msg.textContent = "Game Over! You Drawed! :|";
+    }
+
     updateScore();
   }
   const con = document.getElementById('rps');
@@ -79,7 +87,7 @@ function playGame() {
       playRound(getHumanChoice(), getComputerChoice());
     }
 
-    if(roundsPlayed === 5) {
+    if (roundsPlayed === 5) {
       const div_output = document.querySelector("#div-output");
       const playAgain = document.createElement("button");
       playAgain.textContent = "Play Again";
@@ -88,24 +96,11 @@ function playGame() {
 
       playAgain.addEventListener('click', (e) => {
         roundsPlayed = 0;
-        
-        if (humanScore > computerScore){
-          msg.textContent = "Game Over! You Win! :)";
-        }
 
-        else if (humanScore < computerScore){
-          msg.textContent = "Game Over! You Lose! :(";
-        }
-
-        else if(humanScore === computerScore){
-          msg.textContent = "Game Over! You Drawed! :|"
-        }
-        
         humanScore = 0;
         computerScore = 0;
-
-        updateScore();
         msg.textContent = "";
+        updateScore();
         playAgain.remove();
       });
     }
