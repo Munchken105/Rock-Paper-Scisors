@@ -35,6 +35,13 @@ body{
 
 #rock,#paper,#scissors{
     cursor: pointer;
+    position: relative;
+    top: 0;
+    transition: top ease 0.5;
+}
+
+#rock:hover,#paper:hover,#scissors:hover{
+    top: -10px;
 }
 
 .container {
@@ -66,10 +73,12 @@ body{
     justify-content: center;
     align-items: center;
     margin-top: 60px;
+    
 }
 
 .by-munchken105 a{
-    text-decoration: none;
+    text-decoration: underline;
+    font-weight: bold;
     color: #65743A;
 }
 
