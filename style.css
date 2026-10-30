@@ -61,11 +61,16 @@ body{
     flex-direction: column;
 }
 
+#output{
+    color:#65743A;
+}
+
 .playAgain{
     border-radius: 12px;
     font-size: 24px;
     cursor: pointer;
-
+    color:#C20114;
+    background-color:#B7FDFE ;
 }
 
 .by-munchken105{
@@ -95,7 +100,7 @@ body{
 
 .footer-links{
     text-decoration: none;
-    color: #65743A;
+    color: #C20114;
     margin: 0;
     padding: 0;
 }
